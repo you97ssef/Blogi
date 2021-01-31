@@ -1,0 +1,73 @@
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(30) UNIQUE,
+  password VARCHAR(30),
+  email VARCHAR(100),
+  firstname VARCHAR(30),
+  lastname VARCHAR(30),
+  about VARCHAR(500),
+  role varchar(10)
+);
+
+CREATE TABLE user_links (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user INT,
+  link VARCHAR(100),
+  provider VARCHAR(20),
+  FOREIGN KEY (user) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) UNIQUE,
+  description VARCHAR(500)
+);
+
+CREATE TABLE posts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  category INT,
+  title VARCHAR(100),
+  content VARCHAR(10000),
+  created_date DATETIME,
+  author INT,
+  views INT,
+  FOREIGN KEY (author) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (category) REFERENCES categories(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+/*
+CREATE TABLE post_contents (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  post INT,
+  type VARCHAR(10),
+  content BLOB,
+  FOREIGN KEY (post) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE tags (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(30) UNIQUE
+);
+
+CREATE TABLE posts_tags (
+  tag INT,
+  post INT,
+  FOREIGN KEY (tag) REFERENCES tags(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (post) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  UNIQUE(tag, post)
+);
+*/
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    post INT,
+    content VARCHAR(200) NOT NULL,
+    author VARCHAR(30) NOT NULL,
+    email VARCHAR(60) NOT NULL,
+    FOREIGN KEY (post) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    email VARCHAR(200) NOT NULL,
+    message VARCHAR(2000) NOT NULL
+)
