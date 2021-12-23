@@ -9,7 +9,8 @@ $loader->register();
 
 // Database ---------------------------------------------------------
 
-use app\Models\Person;
+use app\Models\User;
+use framework\auth\AccessLevel;
 use framework\utils\ConnectionFactory;
 
 $keys = parse_ini_file("config/config.ini");
@@ -17,9 +18,21 @@ ConnectionFactory::makeConnection($keys, dirname(__FILE__));
 // ------------------------------------------------------------------
 
 
-$creator = new Person();
-$creator->name = "Youssef";
-$creator->age = 24;
-$creator->role = "Creator";
+// username TEXT
+  // password TEXT
+  // email TEXT
+  // firstname TEXT
+  // lastname TEXT
+  // about TEXT
+  // role TEXT
 
-$creator->insert();
+$admin = new User();
+$admin->username = "Youssef";
+$admin->password = "Password";
+$admin->email = "you97ssef@gmail.com";
+$admin->firstname = "Youssef";
+$admin->lastname = "BAHI";
+$admin->about = "<h1>This website Creator</h1>";
+$admin->role = AccessLevel::$ADMIN;
+
+echo $admin->insert();
